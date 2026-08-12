@@ -1,0 +1,587 @@
+.employee-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0.5rem;
+}
+
+/* ===== WELCOME HEADER ===== */
+.dashboard-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: white;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.welcome-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.welcome-content h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin: 0;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #22c55e;
+  background: #dcfce7;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid #bbf7d0;
+}
+
+.welcome-text {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.welcome-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #1E1B4B;
+  background: #ede9fe;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  border: 1px solid #c4b5fd;
+}
+
+/* ===== STATS CARDS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.stat-card.salary {
+  border-top: 4px solid #1E1B4B;
+}
+
+.stat-card.commission {
+  border-top: 4px solid #C9A84C;
+}
+
+.stat-card.accounts {
+  border-top: 4px solid #2563eb;
+}
+
+.stat-card.leaves {
+  border-top: 4px solid #dc2626;
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.salary-icon {
+  background: rgba(30, 27, 75, 0.08);
+  color: #1E1B4B;
+}
+
+.commission-icon {
+  background: rgba(201, 168, 76, 0.12);
+  color: #C9A84C;
+}
+
+.accounts-icon {
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+}
+
+.leaves-icon {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.65rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin: 0.2rem 0 0 0;
+}
+
+/* ===== PERFORMANCE SECTION ===== */
+.performance-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0A1628;
+  margin: 0;
+}
+
+.view-report-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  background: #e0f2fe;
+  color: #0369a1;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.view-report-btn:hover {
+  background: #bae6fd;
+}
+
+/* ===== CHART ===== */
+.chart-container {
+  padding: 0.5rem 0;
+}
+
+.chart-bars {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 180px;
+  gap: 0.5rem;
+}
+
+.chart-bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.chart-bar-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.2rem;
+  height: 160px;
+}
+
+.chart-bar {
+  width: 24px;
+  border-radius: 3px 3px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transition: height 0.6s ease;
+  min-height: 10px;
+  position: relative;
+}
+
+.chart-bar.accounts-bar {
+  background: #1E1B4B;
+}
+
+.chart-bar.recovery-bar {
+  background: #C9A84C;
+}
+
+.bar-value {
+  font-size: 0.45rem;
+  color: white;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.bar-label {
+  font-size: 0.6rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-top: 0.3rem;
+}
+
+.bar-sub-label {
+  display: flex;
+  gap: 0.3rem;
+  font-size: 0.45rem;
+  color: #9ca3af;
+}
+
+.bar-sub-label span {
+  white-space: nowrap;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-dot.accounts-dot {
+  background: #1E1B4B;
+}
+
+.legend-dot.recovery-dot {
+  background: #C9A84C;
+}
+
+/* ===== QUICK STATS ===== */
+.quick-stats-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.quick-stats-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0A1628;
+  margin: 0 0 1rem 0;
+}
+
+.quick-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.quick-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  border: 1px solid #f3f4f6;
+  transition: all 0.3s;
+}
+
+.quick-stat-card:hover {
+  background: #f3f4f6;
+}
+
+.quick-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 0.5rem;
+  background: rgba(30, 27, 75, 0.08);
+  color: #1E1B4B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quick-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-stat-label {
+  font-size: 0.6rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.quick-stat-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0A1628;
+  margin: 0.1rem 0 0 0;
+}
+
+/* ===== FULL REPORT ===== */
+.full-report-section {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.report-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #0A1628;
+  margin: 0;
+}
+
+.close-report-btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.close-report-btn:hover {
+  background: #f3f4f6;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.report-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.75rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.report-item span {
+  font-size: 0.55rem;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.report-item strong {
+  font-size: 0.9rem;
+  color: #0A1628;
+  margin-top: 0.1rem;
+}
+
+.monthly-breakdown h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0A1628;
+  margin-bottom: 0.75rem;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th {
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6b7280;
+  background: #f8f9fa;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.report-table td {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.report-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.report-table tbody tr:hover td {
+  background: #fafafa;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .quick-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .report-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-welcome {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .quick-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .report-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .chart-bar {
+    width: 18px;
+  }
+  
+  .chart-bars {
+    height: 150px;
+  }
+  
+  .chart-bar-wrapper {
+    height: 130px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quick-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-bar {
+    width: 14px;
+  }
+  
+  .bar-value {
+    font-size: 0.35rem;
+  }
+  
+  .chart-bars {
+    height: 130px;
+  }
+  
+  .chart-bar-wrapper {
+    height: 110px;
+  }
+  
+  .performance-section {
+    padding: 1rem;
+  }
+  
+  .quick-stats-section {
+    padding: 1rem;
+  }
+  
+  .full-report-section {
+    padding: 1rem;
+  }
+  
+  .welcome-title-group {
+    flex-wrap: wrap;
+  }
+}

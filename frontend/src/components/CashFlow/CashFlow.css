@@ -1,0 +1,897 @@
+/* src/components/CashFlow/CashFlow.css */
+
+@import url("https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --cf-paper: #f6f3ea;
+  --cf-paper-line: #e4ddc9;
+  --cf-card: #fffdf7;
+  --cf-ink: #24291f;
+  --cf-ink-soft: #5c6152;
+  --cf-ink-faint: #93927e;
+  --cf-border: #ddd6bf;
+  --cf-navy: #223a34;
+  --cf-navy-dark: #172924;
+  --cf-green: #2f6f4e;
+  --cf-green-bg: #e5f0e5;
+  --cf-red: #a3392f;
+  --cf-red-bg: #f6e5e0;
+  --cf-amber: #8a5a1f;
+  --cf-amber-bg: #f2e6cf;
+  --cf-radius: 12px;
+  --cf-shadow: 0 1px 2px rgba(36, 41, 31, 0.06), 0 4px 14px rgba(36, 41, 31, 0.05);
+}
+
+.cashflow-app {
+  min-height: 100vh;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      var(--cf-paper),
+      var(--cf-paper) 39px,
+      var(--cf-paper-line) 40px
+    );
+  color: var(--cf-ink);
+  padding: 28px 20px 80px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ===== HEADER ===== */
+.cashflow-header {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+}
+
+.cashflow-header-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.cashflow-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cashflow-brand-mark {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--cf-navy);
+  color: #f6f3ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Spectral", serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cashflow-brand h1 {
+  font-family: "Spectral", serif;
+  font-weight: 600;
+  font-size: 26px;
+  margin: 0;
+  color: var(--cf-navy-dark);
+  letter-spacing: -0.01em;
+}
+
+.cashflow-subtitle {
+  font-size: 13px;
+  color: var(--cf-ink-soft);
+}
+
+.cashflow-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 22px;
+  flex-wrap: wrap;
+  background: var(--cf-card);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius);
+  padding: 14px 18px;
+  box-shadow: var(--cf-shadow);
+}
+
+.cashflow-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cashflow-filter-group label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cf-ink-faint);
+  font-weight: 600;
+}
+
+.cashflow-filters select {
+  border: 1px solid var(--cf-border);
+  background: #fff;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 14px;
+  color: var(--cf-ink);
+  min-width: 130px;
+}
+
+.cashflow-segmented {
+  display: flex;
+  border: 1px solid var(--cf-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cashflow-segmented button {
+  border: none;
+  background: #fff;
+  padding: 7px 14px;
+  font-size: 13px;
+  color: var(--cf-ink-soft);
+  cursor: pointer;
+  border-right: 1px solid var(--cf-border);
+}
+
+.cashflow-segmented button:last-child {
+  border-right: none;
+}
+
+.cashflow-segmented button.active {
+  background: var(--cf-navy);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ===== BUTTONS ===== */
+.cashflow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--cf-border);
+  background: #fff;
+  color: var(--cf-ink);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.cashflow-btn:hover {
+  background: #f4f0e2;
+}
+
+.cashflow-btn:active {
+  transform: scale(0.98);
+}
+
+.cashflow-btn-primary {
+  background: var(--cf-navy);
+  border-color: var(--cf-navy);
+  color: #fff;
+}
+
+.cashflow-btn-primary:hover {
+  background: var(--cf-navy-dark);
+}
+
+.cashflow-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--cf-navy);
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.cashflow-btn-ghost:hover {
+  background: var(--cf-green-bg);
+}
+
+.cashflow-btn-danger {
+  color: var(--cf-red);
+  border-color: var(--cf-red-bg);
+}
+
+.cashflow-btn-danger:hover {
+  background: var(--cf-red-bg);
+}
+
+.cashflow-plus {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ===== SUMMARY ===== */
+.cashflow-summary {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.cashflow-summary-card {
+  background: var(--cf-card);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--cf-shadow);
+  border-left: 4px solid var(--cf-border);
+}
+
+.cashflow-summary-card.cashflow-in {
+  border-left-color: var(--cf-green);
+}
+
+.cashflow-summary-card.cashflow-out {
+  border-left-color: var(--cf-red);
+}
+
+.cashflow-summary-card.cashflow-net {
+  border-left-color: var(--cf-amber);
+}
+
+.cashflow-summary-label {
+  font-size: 12px;
+  color: var(--cf-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.cashflow-summary-value {
+  font-family: "Spectral", serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--cf-navy-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== CATEGORY CARDS ===== */
+.cashflow-cards-grid {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.cashflow-category-card {
+  background: var(--cf-card);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius);
+  padding: 14px 16px;
+  box-shadow: var(--cf-shadow);
+  border-left: 4px solid var(--cf-border);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cashflow-category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(36, 41, 31, 0.08);
+}
+
+.cashflow-category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.cashflow-category-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cashflow-category-label {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--cf-ink);
+}
+
+.cashflow-category-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 3px 0;
+}
+
+.cashflow-category-net {
+  border-top: 1px dashed var(--cf-border);
+  margin-top: 4px;
+  padding-top: 6px;
+  font-weight: 600;
+}
+
+.cashflow-category-in-label {
+  color: var(--cf-green);
+}
+
+.cashflow-category-in-value {
+  color: var(--cf-green);
+  font-weight: 500;
+}
+
+.cashflow-category-out-label {
+  color: var(--cf-red);
+}
+
+.cashflow-category-out-value {
+  color: var(--cf-red);
+  font-weight: 500;
+}
+
+.cashflow-category-net-label {
+  color: var(--cf-ink-soft);
+}
+
+.cashflow-category-net-value {
+  font-weight: 600;
+}
+
+/* ===== LIST ===== */
+.cashflow-list {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cashflow-card {
+  background: var(--cf-card);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius);
+  box-shadow: var(--cf-shadow);
+  overflow: hidden;
+}
+
+.cashflow-card-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 20px;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+.cashflow-card-date {
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cashflow-card-day {
+  font-family: "Spectral", serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--cf-navy-dark);
+}
+
+.cashflow-card-note {
+  font-size: 12px;
+  color: var(--cf-ink-faint);
+}
+
+.cashflow-card-figures {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.cashflow-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
+}
+
+.cashflow-figure-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cf-ink-faint);
+  font-weight: 600;
+}
+
+.cashflow-figure-value {
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cashflow-figure.cashflow-in .cashflow-figure-value {
+  color: var(--cf-green);
+}
+
+.cashflow-figure.cashflow-out .cashflow-figure-value {
+  color: var(--cf-red);
+}
+
+.cashflow-figure.cashflow-net .cashflow-figure-value {
+  color: var(--cf-amber);
+}
+
+.cashflow-chevron {
+  font-size: 16px;
+  color: var(--cf-ink-faint);
+  transition: transform 0.15s ease;
+}
+
+.cashflow-chevron.open {
+  transform: rotate(180deg);
+}
+
+/* ===== CARD DETAIL ===== */
+.cashflow-card-detail {
+  border-top: 1px solid var(--cf-border);
+  padding: 16px 20px 18px;
+  background: #fbf9f2;
+}
+
+.cashflow-detail-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.cashflow-detail-col h4 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.cashflow-detail-col.cashflow-in h4 {
+  color: var(--cf-green);
+}
+
+.cashflow-detail-col.cashflow-out h4 {
+  color: var(--cf-red);
+}
+
+.cashflow-detail-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13.5px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--cf-border);
+  font-variant-numeric: tabular-nums;
+}
+
+.cashflow-detail-line:last-child {
+  border-bottom: none;
+}
+
+.cashflow-card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* ===== EMPTY STATE ===== */
+.cashflow-empty {
+  background: var(--cf-card);
+  border: 1px dashed var(--cf-border);
+  border-radius: var(--cf-radius);
+  padding: 46px 24px;
+  text-align: center;
+}
+
+.cashflow-empty-title {
+  font-family: "Spectral", serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--cf-navy-dark);
+  margin: 0 0 6px;
+}
+
+.cashflow-empty-body {
+  font-size: 14px;
+  color: var(--cf-ink-soft);
+  margin: 0 0 16px;
+}
+
+/* ===== TABLE ===== */
+.cashflow-table-wrapper {
+  background: var(--cf-card);
+  border: 1px solid var(--cf-border);
+  border-radius: var(--cf-radius);
+  box-shadow: var(--cf-shadow);
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cashflow-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1400px; /* forces horizontal scroll since there are many columns */
+  font-size: 13px;
+}
+
+.cashflow-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--cf-navy);
+  color: #f6f3ea;
+  font-weight: 600;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: right;
+  padding: 12px 14px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--cf-navy-dark);
+}
+
+.cashflow-table thead th:first-child,
+.cashflow-table thead th:nth-child(2) {
+  text-align: left;
+  position: sticky;
+  left: 0;
+  z-index: 3;
+}
+
+.cashflow-table thead th:first-child {
+  left: 0;
+  min-width: 110px;
+}
+
+.cashflow-table thead th:nth-child(2) {
+  left: 110px;
+  min-width: 140px;
+}
+
+.cashflow-table thead th:last-child {
+  text-align: center;
+  position: sticky;
+  right: 0;
+  z-index: 3;
+}
+
+.cashflow-table tbody td {
+  padding: 11px 14px;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--cf-ink);
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid var(--cf-paper-line);
+}
+
+.cashflow-table tbody tr:hover {
+  background: #f4f0e2;
+}
+
+.cashflow-table tbody tr:nth-child(even) {
+  background: rgba(228, 221, 201, 0.25);
+}
+
+.cashflow-table tbody tr:nth-child(even):hover {
+  background: #f4f0e2;
+}
+
+.cashflow-table tbody td:first-child,
+.cashflow-table tbody td:nth-child(2) {
+  text-align: left;
+  font-weight: 500;
+  color: var(--cf-navy-dark);
+  background: inherit;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.cashflow-table tbody tr:not(:hover) td:first-child,
+.cashflow-table tbody tr:not(:hover) td:nth-child(2) {
+  background: var(--cf-card);
+}
+
+.cashflow-table tbody tr:nth-child(even):not(:hover) td:first-child,
+.cashflow-table tbody tr:nth-child(even):not(:hover) td:nth-child(2) {
+  background: #f2ede0;
+}
+
+.cashflow-table tbody td:nth-child(2) {
+  left: 110px;
+}
+
+.cashflow-table tbody td:last-child {
+  text-align: center;
+  position: sticky;
+  right: 0;
+  background: inherit;
+  z-index: 1;
+}
+
+.cashflow-table tbody tr:not(:hover) td:last-child {
+  background: var(--cf-card);
+}
+
+.cashflow-table tbody tr:nth-child(even):not(:hover) td:last-child {
+  background: #f2ede0;
+}
+
+.cashflow-in-value {
+  color: var(--cf-green);
+  font-weight: 600;
+}
+
+.cashflow-out-value {
+  color: var(--cf-red);
+  font-weight: 500;
+}
+
+.cashflow-table-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.cashflow-btn-small {
+  border: 1px solid var(--cf-border);
+  background: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cf-ink-soft);
+}
+
+.cashflow-btn-small:hover {
+  background: #f0ece0;
+}
+
+.cashflow-btn-edit:hover {
+  color: var(--cf-navy);
+  border-color: var(--cf-navy);
+}
+
+.cashflow-btn-delete:hover {
+  color: var(--cf-red);
+  border-color: var(--cf-red);
+  background: var(--cf-red-bg);
+}
+
+/* ===== MODAL ===== */
+.cashflow-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 41, 36, 0.45);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.cashflow-modal {
+  background: var(--cf-card);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.cashflow-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--cf-border);
+}
+
+.cashflow-modal-head h2 {
+  font-family: "Spectral", serif;
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--cf-navy-dark);
+}
+
+.cashflow-icon-btn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  color: var(--cf-ink-faint);
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cashflow-icon-btn:hover {
+  background: #f0ece0;
+  color: var(--cf-ink);
+}
+
+.cashflow-icon-btn.cashflow-remove:hover {
+  background: var(--cf-red-bg);
+  color: var(--cf-red);
+}
+
+/* ===== FORM ===== */
+.cashflow-form {
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-height: 72vh;
+  overflow-y: auto;
+}
+
+.cashflow-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.cashflow-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cashflow-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cf-ink-soft);
+}
+
+.cashflow-field input,
+.cashflow-line-row input {
+  border: 1px solid var(--cf-border);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 14px;
+  background: #fff;
+  color: var(--cf-ink);
+  font-family: inherit;
+}
+
+.cashflow-field input:focus,
+.cashflow-line-row input:focus {
+  outline: none;
+  border-color: var(--cf-navy);
+}
+
+.cashflow-line-section {
+  border: 1px solid var(--cf-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  background: #fbf9f2;
+}
+
+.cashflow-line-section.cashflow-in {
+  border-left: 4px solid var(--cf-green);
+}
+
+.cashflow-line-section.cashflow-out {
+  border-left: 4px solid var(--cf-red);
+}
+
+.cashflow-line-section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cashflow-line-section-head h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cf-navy-dark);
+}
+
+.cashflow-hint {
+  font-size: 12px;
+  color: var(--cf-ink-faint);
+}
+
+.cashflow-line-row {
+  display: grid;
+  grid-template-columns: 1fr 140px auto;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.cashflow-line-row:last-child {
+  margin-bottom: 0;
+}
+
+.cashflow-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 6px;
+  border-top: 1px solid var(--cf-border);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .cashflow-app {
+    padding: 18px 12px 60px;
+  }
+
+  .cashflow-card-main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cashflow-chevron {
+    align-self: flex-end;
+    margin-top: -30px;
+  }
+
+  .cashflow-line-row {
+    grid-template-columns: 1fr;
+  }
+
+  .cashflow-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .cashflow-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cashflow-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cashflow-segmented {
+    display: flex;
+  }
+
+  .cashflow-segmented button {
+    flex: 1;
+    text-align: center;
+  }
+
+  .cashflow-detail-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .cashflow-modal {
+    max-width: 100%;
+    margin: 10px;
+  }
+}

@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme Colors */
+:root {
+  --primary: #0A1628;
+  --secondary: #1A2A4A;
+  --accent: #C9A84C;
+  --accent-light: #E8D5A3;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f0f2f5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b8973a;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 16rem;
+}
+
+.page-content {
+  padding: 1.5rem;
+  margin-top: 4rem;
+}
+
+/* Import all component CSS */
+@import './components/Login/Login.css';
+@import './components/Layout/Sidebar.css';
+@import './components/Layout/Header.css';
+@import './components/Dashboard/Dashboard.css';
+@import './components/Inventory/Inventory.css';
+@import './components/Finance/Finance.css';
+@import './components/Recovery/Recovery.css';
+@import './components/Employees/AddEmployee.css';

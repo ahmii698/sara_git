@@ -1,0 +1,1734 @@
+/* ===== EMPLOYEE PERFORMANCE REPORT CSS - FULLY RESPONSIVE ===== */
+
+.epr-employee-performance-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.epr-performance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%);
+  padding: 1.4rem 1.75rem;
+  border-radius: 1.1rem;
+  border: 1px solid #edeef2;
+  box-shadow: 0 1px 2px rgba(10, 22, 40, 0.04), 0 8px 24px rgba(10, 22, 40, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.epr-performance-header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.1rem;
+  bottom: 1.1rem;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, #1E1B4B 0%, #C9A84C 100%);
+}
+
+.epr-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+  padding-left: 0.5rem;
+}
+
+.epr-header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.epr-performance-header h2 {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0A1628;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.epr-live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 0.28rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid #bbf7d0;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.epr-live-badge svg {
+  animation: eprPulse 2s ease-in-out infinite;
+}
+
+@keyframes eprPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.epr-subtitle {
+  color: #6b7280;
+  font-size: 0.92rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ===== HEADER ACTIONS (dropdown + search grouped, right-aligned) ===== */
+.epr-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* ===== SEARCH WRAPPER ===== */
+.epr-search-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 0 0.85rem;
+  flex: 0 1 300px;
+  min-width: 200px;
+  transition: all 0.25s ease;
+  background: #fbfbfc;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.epr-search-wrapper:hover {
+  border-color: #d1d5db;
+  background: white;
+}
+
+.epr-search-wrapper:focus-within {
+  border-color: #1E1B4B;
+  background: white;
+  box-shadow: 0 0 0 3.5px rgba(30, 27, 75, 0.1);
+}
+
+.epr-search-wrapper .epr-search-icon {
+  color: #9ca3af;
+  flex-shrink: 0;
+  transition: color 0.25s ease;
+}
+
+.epr-search-wrapper:focus-within .epr-search-icon {
+  color: #1E1B4B;
+}
+
+.epr-search-wrapper input {
+  padding: 0.6rem 0.75rem;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: transparent;
+  min-width: 0;
+  height: 100%;
+  color: #1f2937;
+}
+
+.epr-search-wrapper input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* ===== EMPLOYEE DROPDOWN ===== */
+.epr-employee-dropdown-wrapper {
+  position: relative;
+  min-width: 190px;
+  flex-shrink: 0;
+}
+
+.epr-employee-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.75rem;
+  background: #fbfbfc;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  gap: 0.75rem;
+  white-space: nowrap;
+  height: 44px;
+  box-sizing: border-box;
+}
+
+.epr-employee-dropdown-toggle:hover {
+  border-color: #d1d5db;
+  background: white;
+}
+
+.epr-employee-dropdown-toggle.epr-open {
+  border-color: #1E1B4B;
+  background: white;
+  box-shadow: 0 0 0 3.5px rgba(30, 27, 75, 0.1);
+}
+
+.epr-employee-dropdown-toggle span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.epr-employee-dropdown-toggle svg {
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.epr-chevron {
+  transition: transform 0.25s ease;
+}
+
+.epr-employee-dropdown-toggle.epr-open .epr-chevron {
+  transform: rotate(180deg);
+  color: #1E1B4B;
+}
+
+.epr-employee-dropdown-list {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  left: 0;
+  background: white;
+  border: 1px solid #eceef1;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 6px rgba(10, 22, 40, 0.03), 0 16px 32px rgba(10, 22, 40, 0.12);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 50;
+  padding: 0.35rem;
+  animation: eprDropIn 0.15s ease;
+}
+
+@keyframes eprDropIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.epr-employee-dropdown-list .epr-dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.55rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.epr-employee-dropdown-list .epr-dropdown-item:hover {
+  background: #f6f6f8;
+}
+
+.epr-employee-dropdown-list .epr-dropdown-item.epr-active {
+  background: #eef0fa;
+  color: #1E1B4B;
+}
+
+.epr-employee-dropdown-list .epr-dropdown-role {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.epr-employee-dropdown-list .epr-dropdown-item.epr-active .epr-dropdown-role {
+  background: #e0e2f5;
+  color: #1E1B4B;
+}
+
+/* ===== SELECTED EMPLOYEE INFO ===== */
+.epr-selected-employee-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: #fbfbfd;
+  border-radius: 0.85rem;
+  border: 1px solid #eceef1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== LOADING STATE ===== */
+.epr-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 5rem 1rem;
+  color: #6b7280;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.epr-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #eceef1;
+  border-top-color: #1E1B4B;
+  animation: eprSpin 0.8s linear infinite;
+}
+
+@keyframes eprSpin {
+  to { transform: rotate(360deg); }
+}
+
+.epr-selected-employee-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1E1B4B;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.epr-selected-employee-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.epr-selected-employee-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0A1628;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.epr-selected-employee-role {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+/* ===== STATS CARDS ===== */
+.epr-stats-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.epr-stats-grid-4.epr-employee-stats {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.epr-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1.1rem 1.25rem;
+  background: white;
+  border-radius: 0.85rem;
+  border: 1px solid #f0f1f4;
+  box-shadow: 0 1px 2px rgba(10, 22, 40, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  min-width: 0;
+  box-sizing: border-box;
+  border-left: 4px solid #1E1B4B;
+}
+
+.epr-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(10, 22, 40, 0.08);
+}
+
+.epr-stat-card.epr-active {
+  box-shadow: 0 0 0 1.5px currentColor, 0 10px 24px rgba(10, 22, 40, 0.1);
+}
+
+.epr-total-accounts-card {
+  border-left-color: #1E1B4B;
+  color: #1E1B4B;
+}
+.epr-new-accounts-card {
+  border-left-color: #2563eb;
+  color: #2563eb;
+}
+.epr-recovery-card {
+  border-left-color: #C9A84C;
+  color: #C9A84C;
+}
+.epr-overdue-card-main {
+  border-left-color: #dc2626;
+  color: #dc2626;
+}
+
+.epr-total-accounts-card .epr-stat-value,
+.epr-new-accounts-card .epr-stat-value,
+.epr-recovery-card .epr-stat-value,
+.epr-overdue-card-main .epr-stat-value {
+  color: inherit;
+}
+
+.epr-stat-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.epr-stat-card:hover .epr-stat-icon {
+  transform: scale(1.06);
+}
+
+.epr-stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.epr-stat-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #8a8fa3;
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+  white-space: nowrap;
+}
+
+.epr-stat-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0A1628;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== TABLE ===== */
+.epr-table-container {
+  background: white;
+  border-radius: 1.1rem;
+  border: 1px solid #f0f1f4;
+  box-shadow: 0 1px 2px rgba(10, 22, 40, 0.03), 0 8px 24px rgba(10, 22, 40, 0.04);
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.epr-table-header {
+  padding: 0.9rem 1.5rem;
+  background: #fbfbfd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eceef1;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.epr-table-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.epr-table-header h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin: 0;
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+.epr-record-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #6b7280;
+  background: #eef0f3;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.epr-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.epr-accounts-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.epr-accounts-table thead {
+  background: #fbfbfd;
+}
+
+.epr-accounts-table th {
+  padding: 0.85rem 0.75rem;
+  text-align: left;
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #6b7280;
+  border-bottom: 1.5px solid #eceef1;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.epr-accounts-table td {
+  padding: 0.75rem;
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.epr-accounts-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.epr-accounts-table tbody tr:hover td {
+  background: #f7f7fb;
+}
+
+.epr-accounts-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.epr-accounts-table .epr-even-row td {
+  background: #fbfbfd;
+}
+
+.epr-accounts-table .epr-odd-row td {
+  background: white;
+}
+
+.epr-accounts-table .epr-even-row:hover td,
+.epr-accounts-table .epr-odd-row:hover td {
+  background: #f7f7fb;
+}
+
+.epr-overdue-row {
+  border-left: 3px solid #ef4444 !important;
+}
+
+.epr-overdue-row td {
+  border-bottom-color: #fde3e3 !important;
+}
+
+.epr-no-data {
+  text-align: center;
+  padding: 3rem 1rem !important;
+  color: #9ca3af !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+}
+
+.epr-case-number {
+  display: inline-block;
+  font-weight: 700;
+  color: #1E1B4B;
+  background: #f3f2fa;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.4rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.epr-customer-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+}
+
+.epr-customer-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ede9fe;
+  color: #1E1B4B;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px white, 0 0 0 3px #eceef1;
+}
+
+.epr-date-info {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.epr-date-info svg {
+  color: #9ca3af;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.epr-amount {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.epr-paid-amount {
+  color: #065f46;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.epr-balance-amount {
+  color: #dc2626;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.epr-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.epr-status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.epr-status-badge.epr-paid {
+  background: #e3f9ef;
+  color: #0d9260;
+}
+
+.epr-status-badge.epr-pending {
+  background: #fef6e6;
+  color: #b7791f;
+}
+
+.epr-status-badge.epr-overdue {
+  background: #fdecec;
+  color: #d13438;
+}
+
+.epr-status-badge.epr-partial {
+  background: #fef6e6;
+  color: #b7791f;
+}
+
+.epr-status-badge.epr-unpaid {
+  background: #fdecec;
+  color: #d13438;
+}
+
+.epr-action-group {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.epr-btn-view-account {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 0.55rem;
+  background: #f0f4fb;
+  color: #1E1B4B;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epr-btn-view-account:hover {
+  background: white;
+  border-color: #dfe3ee;
+  color: #1E1B4B;
+  box-shadow: 0 4px 10px rgba(30, 27, 75, 0.14);
+  transform: translateY(-1px);
+}
+
+/* ===== MODAL ===== */
+.epr-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  animation: eprFadeIn 0.2s ease;
+}
+
+@keyframes eprFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.epr-modal-content {
+  background: white !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+.epr-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 2px solid #f3f4f6;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 5;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.epr-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.epr-modal-icon {
+  color: #1E1B4B;
+  flex-shrink: 0;
+}
+
+.epr-modal-header h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0A1628;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.epr-modal-close {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.epr-modal-close:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.epr-modal-body {
+  padding: 1.25rem 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.epr-modal-footer {
+  padding: 0.75rem 1.5rem 1rem;
+  border-top: 2px solid #f3f4f6;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  bottom: 0;
+  background: white;
+  flex-shrink: 0;
+}
+
+.epr-account-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.epr-account-detail-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1E1B4B;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.epr-account-detail-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.epr-account-detail-info h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.epr-account-detail-case {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.epr-account-detail-product {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.epr-account-detail-status {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.epr-account-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.epr-account-detail-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.75rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.epr-account-detail-item span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.epr-account-detail-item strong {
+  font-size: 0.95rem;
+  color: #0A1628;
+  margin-top: 0.1rem;
+}
+
+.epr-guarantors-section {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+}
+
+.epr-guarantors-section h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin-bottom: 0.5rem;
+}
+
+.epr-guarantor-item {
+  padding: 0.4rem 0.75rem;
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 0.3rem;
+}
+
+.epr-guarantor-item:last-child {
+  margin-bottom: 0;
+}
+
+.epr-guarantor-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.2rem 1rem;
+  font-size: 0.85rem;
+}
+
+.epr-guarantor-info span {
+  color: #1f2937;
+}
+
+/* ===== INSTALLMENT DETAILS SECTION ===== */
+.epr-installment-details-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.epr-installment-details-section .epr-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.epr-installment-details-section .epr-section-header h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin: 0;
+}
+
+/* ===== INSTALLMENT HISTORY TABLE ===== */
+.epr-installment-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+  font-size: 0.8rem;
+}
+
+.epr-installment-history-table thead {
+  background: #f8f9fa;
+}
+
+.epr-installment-history-table th {
+  padding: 0.6rem 0.6rem;
+  text-align: left;
+  font-size: 0.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #4b5563;
+  border-bottom: 2px solid #e5e7eb;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.epr-installment-history-table td {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.8rem;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.epr-installment-history-table tbody tr:hover td {
+  background: #f0f0f5;
+}
+
+.epr-installment-history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.epr-installment-history-table .epr-even-row td {
+  background: #fafbfc;
+}
+
+.epr-installment-history-table .epr-odd-row td {
+  background: white;
+}
+
+.epr-installment-history-table .epr-even-row:hover td,
+.epr-installment-history-table .epr-odd-row:hover td {
+  background: #f0f0f5;
+}
+
+.epr-installment-history-table .epr-description-cell {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== PAY NOW WITH INPUT FIELD ===== */
+.epr-pay-now-section {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.epr-pay-now-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.epr-pay-input-group {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: white;
+  overflow: hidden;
+  flex: 1;
+  min-width: 140px;
+  transition: all 0.3s;
+}
+
+.epr-pay-input-group:focus-within {
+  border-color: #1E1B4B;
+  box-shadow: 0 0 0 3px rgba(30, 27, 75, 0.12);
+}
+
+.epr-pay-currency {
+  padding: 0.5rem 0.75rem;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-right: 1px solid #d1d5db;
+  white-space: nowrap;
+}
+
+.epr-pay-amount-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-width: 80px;
+  background: transparent;
+  width: 100%;
+}
+
+.epr-pay-amount-input::-webkit-inner-spin-button,
+.epr-pay-amount-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.epr-pay-amount-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.epr-btn-pay-now-full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  background: #22c55e;
+  color: white;
+  border: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.epr-btn-pay-now-full:hover {
+  background: #16a34a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.4);
+}
+
+.epr-btn-pay-now-full:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.epr-btn-pay-now-full svg {
+  width: 18px;
+  height: 18px;
+}
+
+.epr-pay-hint {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* ===== CLOSE BUTTON ===== */
+.epr-btn-cancel {
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid #d1d5db;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.epr-btn-cancel:hover {
+  background: #f3f4f6;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 1200px) {
+  .epr-stats-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .epr-stats-grid-4.epr-employee-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .epr-employee-performance-container {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+  
+  .epr-stats-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .epr-stats-grid-4.epr-employee-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .epr-performance-header {
+    flex-wrap: wrap;
+    padding: 1rem;
+  }
+  
+  .epr-header-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .epr-search-wrapper {
+    flex: 1 1 200px;
+    min-width: 120px;
+  }
+  
+  .epr-employee-dropdown-wrapper {
+    flex: 0 1 180px;
+    min-width: 140px;
+  }
+  
+  .epr-stat-card {
+    padding: 0.75rem 1rem;
+  }
+  
+  .epr-stat-value {
+    font-size: 1.05rem;
+  }
+  
+  .epr-installment-details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .epr-employee-performance-container {
+    padding: 0.5rem;
+    gap: 0.75rem;
+  }
+  
+  .epr-stats-grid-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .epr-stats-grid-4.epr-employee-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .epr-performance-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+  }
+  
+  .epr-performance-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .epr-header-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .epr-search-wrapper {
+    max-width: 100%;
+    min-width: 100%;
+    flex: 1 1 auto;
+  }
+  
+  .epr-employee-dropdown-wrapper {
+    min-width: 100%;
+    max-width: 100%;
+    flex: 1 1 auto;
+  }
+  
+  .epr-employee-dropdown-toggle {
+    width: 100%;
+  }
+  
+  .epr-stat-card {
+    padding: 0.6rem 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .epr-stat-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .epr-stat-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .epr-stat-value {
+    font-size: 0.95rem;
+  }
+  
+  .epr-stat-label {
+    font-size: 0.55rem;
+  }
+  
+  .epr-accounts-table {
+    min-width: 600px;
+  }
+  
+  .epr-accounts-table th,
+  .epr-accounts-table td {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .epr-account-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .epr-guarantor-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .epr-pay-now-row {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  
+  .epr-pay-input-group {
+    min-width: 100%;
+  }
+  
+  .epr-btn-pay-now-full {
+    width: 100%;
+    min-width: unset;
+  }
+  
+  .epr-pay-currency {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .epr-pay-amount-input {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .epr-modal-header,
+  .epr-modal-body,
+  .epr-modal-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .epr-modal-header h3 {
+    font-size: 1rem;
+    max-width: 150px;
+  }
+  
+  .epr-selected-employee-info {
+    padding: 0.5rem 1rem;
+  }
+  
+  .epr-table-header {
+    padding: 0.5rem 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .epr-table-header-left {
+    flex-wrap: wrap;
+  }
+  
+  .epr-header-left {
+    width: 100%;
+  }
+  
+  .epr-installment-history-table {
+    min-width: 550px;
+    font-size: 0.7rem;
+  }
+  
+  .epr-installment-history-table th,
+  .epr-installment-history-table td {
+    padding: 0.3rem 0.4rem;
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .epr-employee-performance-container {
+    padding: 0.25rem;
+    gap: 0.5rem;
+  }
+  
+  .epr-stats-grid-4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+  .epr-stats-grid-4.epr-employee-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .epr-stat-card {
+    padding: 0.5rem 0.6rem;
+    gap: 0.4rem;
+    border-radius: 0.5rem;
+  }
+  
+  .epr-stat-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 0.5rem;
+  }
+  
+  .epr-stat-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .epr-stat-value {
+    font-size: 0.85rem;
+  }
+  
+  .epr-stat-label {
+    font-size: 0.5rem;
+  }
+  
+  .epr-performance-header {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.75rem;
+  }
+  
+  .epr-performance-header h2 {
+    font-size: 1.1rem;
+  }
+  
+  .epr-live-badge {
+    font-size: 0.55rem;
+    padding: 0.15rem 0.5rem;
+  }
+  
+  .epr-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .epr-search-wrapper {
+    height: 38px;
+  }
+  
+  .epr-search-wrapper input {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .epr-employee-dropdown-toggle {
+    height: 38px;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.75rem;
+  }
+  
+  .epr-accounts-table {
+    min-width: 480px;
+  }
+  
+  .epr-accounts-table th,
+  .epr-accounts-table td {
+    padding: 0.25rem 0.35rem;
+    font-size: 0.65rem;
+  }
+  
+  .epr-customer-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 0.55rem;
+  }
+  
+  .epr-case-number {
+    font-size: 0.7rem;
+  }
+  
+  .epr-status-badge {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.4rem;
+  }
+  
+  .epr-amount,
+  .epr-paid-amount,
+  .epr-balance-amount {
+    font-size: 0.65rem;
+  }
+  
+  .epr-date-info {
+    font-size: 0.65rem;
+  }
+  
+  .epr-date-info svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .epr-btn-view-account {
+    padding: 0.15rem 0.35rem;
+  }
+  
+  .epr-btn-view-account svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .epr-description-textarea {
+    font-size: 0.85rem;
+    min-height: 50px;
+  }
+  
+  .epr-pay-input-group {
+    min-width: 100%;
+  }
+  
+  .epr-btn-pay-now-full {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .epr-pay-currency {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.4rem;
+  }
+  
+  .epr-pay-amount-input {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.4rem;
+  }
+  
+  .epr-pay-hint {
+    font-size: 0.55rem;
+  }
+  
+  .epr-table-header {
+    padding: 0.35rem 0.75rem;
+  }
+  
+  .epr-table-header h3 {
+    font-size: 0.85rem;
+  }
+  
+  .epr-record-count {
+    font-size: 0.6rem;
+    padding: 0.05rem 0.4rem;
+  }
+  
+  .epr-modal-body {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .epr-modal-header {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .epr-modal-header h3 {
+    font-size: 0.9rem;
+    max-width: 100px;
+  }
+  
+  .epr-modal-footer {
+    padding: 0.4rem 0.75rem 0.6rem;
+    flex-direction: column;
+  }
+  
+  .epr-btn-cancel {
+    width: 100%;
+    justify-content: center;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .epr-account-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .epr-account-detail-status {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+  
+  .epr-account-detail-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .epr-account-detail-info h4 {
+    font-size: 0.9rem;
+  }
+  
+  .epr-account-detail-case {
+    font-size: 0.7rem;
+  }
+  
+  .epr-account-detail-product {
+    font-size: 0.65rem;
+  }
+  
+  .epr-account-detail-item {
+    padding: 0.35rem 0.5rem;
+  }
+  
+  .epr-account-detail-item strong {
+    font-size: 0.8rem;
+  }
+  
+  .epr-account-detail-item span {
+    font-size: 0.55rem;
+  }
+  
+  .epr-guarantors-section {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .epr-guarantor-item {
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .epr-guarantor-info {
+    font-size: 0.7rem;
+    gap: 0.1rem 0.5rem;
+  }
+  
+  .epr-selected-employee-info {
+    padding: 0.4rem 0.75rem;
+    gap: 0.5rem;
+  }
+  
+  .epr-selected-employee-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+  
+  .epr-selected-employee-name {
+    font-size: 0.85rem;
+  }
+  
+  .epr-selected-employee-role {
+    font-size: 0.7rem;
+  }
+  
+  .epr-employee-dropdown-list .epr-dropdown-item {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
+  
+  .epr-installment-history-table {
+    min-width: 450px;
+    font-size: 0.6rem;
+  }
+  
+  .epr-installment-history-table th,
+  .epr-installment-history-table td {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.55rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .epr-stats-grid-4 {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+  .epr-stats-grid-4.epr-employee-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .epr-stat-card {
+    padding: 0.4rem 0.5rem;
+  }
+  
+  .epr-accounts-table {
+    min-width: 380px;
+  }
+  
+  .epr-accounts-table th,
+  .epr-accounts-table td {
+    padding: 0.2rem 0.25rem;
+    font-size: 0.55rem;
+  }
+  
+  .epr-performance-header h2 {
+    font-size: 0.95rem;
+  }
+  
+  .epr-modal-header h3 {
+    font-size: 0.8rem;
+    max-width: 80px;
+  }
+}
+
+/* ===== REMARKS FIELD (Overdue Table) ===== */
+.epr-remarks-input {
+  width: 100%;
+  min-width: 140px;
+  padding: 0.4rem 0.6rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #1f2937;
+  background: white;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.epr-remarks-input:focus {
+  border-color: #1E1B4B;
+  box-shadow: 0 0 0 3px rgba(30, 27, 75, 0.12);
+}
+
+.epr-remarks-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.epr-remarks-display {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+  white-space: normal;
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .epr-remarks-input {
+    min-width: 110px;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .epr-remarks-input {
+    min-width: 90px;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.4rem;
+  }
+  .epr-remarks-display {
+    font-size: 0.65rem;
+  }
+}

@@ -1,0 +1,1111 @@
+.salary-container {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f4f6;
+}
+
+.salary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.header-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.salary-header h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0A1628;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: #dcfce7;
+  padding: 0.2rem 0.7rem;
+  border-radius: 9999px;
+  border: 1px solid #bbf7d0;
+}
+
+.branch-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #4b5563;
+  padding: 0.25rem 0.9rem;
+  background: #f3f4f6;
+  border-radius: 9999px;
+  width: fit-content;
+}
+
+.branch-label svg {
+  color: #1E1B4B;
+}
+
+/* ============================================ */
+/* ===== VIP STAT CARDS (bigger, premium) ===== */
+/* ============================================ */
+.header-stats {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 0.35rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.95rem 1.35rem;
+  border-radius: 1.1rem;
+  border: 1.5px solid #eef0f4;
+  background: #ffffff;
+  min-width: 168px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(16, 24, 40, 0.09);
+}
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-card-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.stat-card-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.stat-card-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  margin-top: 0.1rem;
+}
+
+.salary-search {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 0 0.75rem;
+  margin-bottom: 1rem;
+  max-width: 320px;
+  transition: all 0.3s;
+  background: white;
+}
+
+.salary-search:focus-within {
+  border-color: #1E1B4B;
+  box-shadow: 0 0 0 3px rgba(30, 27, 75, 0.12);
+}
+
+.salary-search .search-icon {
+  color: #9ca3af;
+}
+
+.salary-search input {
+  padding: 0.7rem 0.75rem;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  font-weight: 500;
+  background: transparent;
+}
+
+.salary-table-wrap {
+  overflow-x: auto;
+  border-radius: 0.9rem;
+}
+
+.salary-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.salary-table thead {
+  background: #f8f9fa;
+}
+
+.salary-table th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #4b5563;
+  border-bottom: 2px solid #e5e7eb;
+  letter-spacing: 0.5px;
+}
+
+.salary-table td {
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+.salary-table tbody tr {
+  transition: background 0.2s;
+}
+
+.salary-table tbody tr:hover td {
+  background: #fafafa;
+}
+
+.salary-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.salary-table .paid-row td {
+  border-left: 4px solid #16a34a;
+}
+
+.salary-table .pending-row td {
+  border-left: 4px solid #dc2626;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2.5rem !important;
+  color: #9ca3af !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+}
+
+.employee-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #0A1628;
+}
+
+.emp-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.salary-amount {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #1E1B4B;
+}
+
+.commission-badge {
+  padding: 0.2rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.account-badge {
+  padding: 0.2rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.advance-badge {
+  padding: 0.2rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.no-value {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ===== STATUS BADGES (Paid = green, Pending = red, VIP dot style) ===== */
+.badge-active,
+.badge-pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.3rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border: 1.5px solid transparent;
+}
+
+.badge-active::before,
+.badge-pending::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.badge-active {
+  background: #d1fae5;
+  color: #065f46;
+  border-color: rgba(6, 95, 70, 0.15);
+}
+
+.badge-pending {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: rgba(185, 28, 28, 0.18);
+}
+
+.last-paid {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.action-group {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.action-group button {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.65rem;
+  gap: 0.2rem;
+}
+
+.action-group button:hover {
+  transform: scale(1.08);
+}
+
+.btn-view {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.btn-view:hover {
+  background: #bae6fd;
+}
+
+.btn-edit {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.btn-edit:hover {
+  background: #cbd5e1;
+}
+
+.btn-advance {
+  background: #fce4ec;
+  color: #c62828;
+}
+
+.btn-advance:hover {
+  background: #f8bbd0;
+}
+
+.btn-pay {
+  background: #d1fae5;
+  color: #065f46;
+  gap: 0.3rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.7rem;
+}
+
+.btn-pay:hover {
+  background: #a7f3d0;
+}
+
+.btn-reset {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.btn-reset:hover {
+  background: #fca5a5;
+}
+
+/* ===== FULL SCREEN MODAL ===== */
+.salary-modal-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 9999 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  animation: salaryFadeIn 0.2s ease;
+}
+
+@keyframes salaryFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.salary-modal-content {
+  background: white !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+.salary-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-bottom: 2px solid #f3f4f6;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 5;
+  flex-shrink: 0;
+}
+
+.salary-modal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.salary-modal-icon {
+  color: #1E1B4B;
+}
+
+.salary-modal-header h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0A1628;
+  margin: 0;
+}
+
+.salary-modal-close {
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.salary-modal-close:hover {
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.salary-modal-body {
+  padding: 1.5rem 2rem;
+  flex: 1;
+  overflow-y: auto;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.salary-modal-footer {
+  padding: 1rem 2rem 1.25rem;
+  border-top: 2px solid #f3f4f6;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  position: sticky;
+  bottom: 0;
+  background: white;
+  flex-shrink: 0;
+}
+
+.employee-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.employee-detail-header.small {
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.emp-detail-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1E1B4B;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.emp-detail-avatar.small {
+  width: 40px;
+  height: 40px;
+  font-size: 0.9rem;
+}
+
+.emp-detail-info h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0A1628;
+  margin: 0;
+}
+
+.emp-detail-branch {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.history-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-item {
+  text-align: center;
+  padding: 0.6rem;
+  border-radius: 0.75rem;
+}
+
+.summary-item span {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-item strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-top: 0.1rem;
+}
+
+/* ===== ADVANCES / LOANS PANEL (was yellow -> now indigo, VIP/professional) ===== */
+.advances-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #eef2ff;
+  border-radius: 0.75rem;
+  border: 1.5px solid #c7d2fe;
+}
+
+.advances-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.advances-header h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #4338ca;
+  margin: 0;
+}
+
+.advances-total {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4338ca;
+  background: #e0e7ff;
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.advances-table-wrap {
+  overflow-x: auto;
+}
+
+.advances-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.advances-table th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6b7280;
+  padding: 0.3rem 0.4rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.advances-table td {
+  padding: 0.35rem 0.4rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.advance-date-time {
+  display: flex;
+  flex-direction: column;
+}
+
+.adv-date {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.adv-time {
+  font-size: 0.6rem;
+  color: #6b7280;
+}
+
+.advance-amount-cell {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.advance-reason-cell {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.remaining-salary {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid #c7d2fe;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.remaining-salary strong {
+  color: #1E1B4B;
+  font-size: 1.1rem;
+}
+
+.history-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.history-list h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.history-count {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.1rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.no-history {
+  text-align: center;
+  color: #9ca3af;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background: #fafafa;
+}
+
+.history-left {
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+}
+
+.history-date {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.history-date-full {
+  font-size: 0.65rem;
+  color: #6b7280;
+}
+
+.history-center {
+  flex: 1;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.history-amount {
+  font-weight: 800;
+  color: #1E1B4B;
+  font-size: 1rem;
+}
+
+.deducted-badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #dc2626;
+  background: #fee2e2;
+  padding: 0.1rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.history-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.history-status {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  border-radius: 9999px;
+}
+
+.history-status.paid {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.history-status.commission {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.advance-info-box {
+  background: #f8f9fa;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.advance-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.advance-info-row.highlight {
+  border-top: 2px solid #e5e7eb;
+  margin-top: 0.3rem;
+  padding-top: 0.5rem;
+}
+
+.commission-highlight {
+  color: #8B5CF6;
+}
+
+.advance-taken {
+  color: #dc2626;
+}
+
+.remaining-amount {
+  color: #1E1B4B;
+  font-size: 1.2rem;
+}
+
+.advance-note-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.advance-note-box p {
+  margin: 0;
+}
+
+.advance-icon {
+  color: #1E1B4B;
+  flex-shrink: 0;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 0.3rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.75rem;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  background: white;
+}
+
+.form-input:focus {
+  border-color: #1E1B4B;
+  box-shadow: 0 0 0 3px rgba(30, 27, 75, 0.12);
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-top: 0.15rem;
+}
+
+.btn-cancel {
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid #d1d5db;
+  background: transparent;
+  color: #6b7280;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #f3f4f6;
+}
+
+.btn-save {
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.75rem;
+  background: #1E1B4B;
+  color: white;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-save:hover {
+  background: #2a265a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(30, 27, 75, 0.3);
+}
+
+.btn-advance-save {
+  padding: 0.6rem 1.5rem;
+  border-radius: 0.75rem;
+  background: #1E1B4B;
+  color: white;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-advance-save:hover {
+  background: #2a265a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(30, 27, 75, 0.3);
+}
+
+@media (max-width: 768px) {
+  .salary-table {
+    min-width: 800px;
+  }
+  
+  .salary-table th,
+  .salary-table td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  
+  .action-group button {
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .history-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .salary-modal-header,
+  .salary-modal-body,
+  .salary-modal-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .header-stats {
+    gap: 0.5rem;
+  }
+
+  .stat-card {
+    min-width: 140px;
+    padding: 0.75rem 1rem;
+  }
+
+  .stat-card-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stat-card-value {
+    font-size: 1.05rem;
+  }
+  
+  .salary-search {
+    max-width: 100%;
+  }
+  
+  .history-item {
+    flex-wrap: wrap;
+  }
+  
+  .history-center {
+    flex: 1 1 100%;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .advances-section {
+    padding: 0.75rem;
+  }
+  
+  .advance-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+  
+  .employee-detail-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .salary-modal-header h3 {
+    font-size: 1rem;
+  }
+  
+  .salary-header h3 {
+    font-size: 1.2rem;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+}
+
+/* ===== ADD THIS AT THE END OF YOUR CSS FILE ===== */
+
+/* ===== BALANCE COLUMN STYLES ===== */
+.balance-amount {
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+.balance-amount.positive {
+  color: #1E1B4B;
+  background: rgba(30, 27, 75, 0.06);
+}
+
+.balance-amount.zero {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.balance-amount.negative {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* Table header for balance */
+.salary-table th:nth-child(6) {
+  min-width: 120px;
+}
+
+/* Responsive balance column */
+@media (max-width: 768px) {
+  .balance-amount {
+    font-size: 0.8rem;
+  }
+  
+  .salary-table th:nth-child(6) {
+    min-width: 90px;
+  }
+}
+
+/* ============================================ */
+/* ===== LOADING STATE ===== */
+/* ============================================ */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 16px;
+}
+
+.loading-state .spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #1E1B4B;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.loading-state p {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* ============================================ */
+/* ===== LOAN BADGE ===== */
+/* ============================================ */
+.loan-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.btn-loan {
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.65rem;
+  gap: 0.2rem;
+  background: #fce4ec;
+  color: #c62828;
+}
+
+.btn-loan:hover {
+  background: #f8bbd0;
+  transform: scale(1.08);
+}

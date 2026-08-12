@@ -1,0 +1,342 @@
+.header {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 16rem !important;
+  width: auto !important;
+  height: 4.25rem !important;
+  margin: 0 !important;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 40;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  padding: 0 1.75rem;
+  transition: left 0.3s ease;
+  box-sizing: border-box !important;
+  border-bottom: 1px solid #f1f2f6;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, #1E1B4B, #C9A84C, #1E1B4B);
+  opacity: 0.7;
+}
+
+/* ===== EMPLOYEE HEADER ===== */
+.header.employee-header {
+  background: #0A1628;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  left: 4.5rem;
+  padding: 0 1.5rem;
+}
+
+.employee-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.employee-brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.employee-brand .brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.employee-brand .brand-name span {
+  color: #C9A84C;
+}
+
+.employee-brand .brand-panel {
+  font-size: 0.5rem;
+  color: #E8D5A3;
+  letter-spacing: 3px;
+  font-weight: 500;
+}
+
+.employee-branch {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #C9A84C;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background: rgba(201, 168, 76, 0.15);
+  padding: 0.2rem 0.8rem;
+  border-radius: 9999px;
+}
+
+.employee-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ===== HEADER USER ===== */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.user-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #e2c46f, #C9A84C);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.18), 0 4px 10px rgba(201, 168, 76, 0.3);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.user-info .user-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.user-info .user-role {
+  font-size: 0.65rem;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Employee ke liye white text */
+.header.employee-header .user-info .user-name {
+  color: white;
+}
+
+.header.employee-header .user-info .user-role {
+  color: #9ca3af;
+}
+
+/* Admin/Manager ke liye dark text */
+.header:not(.employee-header) .user-info .user-name {
+  color: #1f2937;
+}
+
+.header:not(.employee-header) .user-info .user-role {
+  color: #C9A84C;
+}
+
+/* ===== LOGOUT BUTTON IN HEADER ===== */
+.logout-btn-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 0.65rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.header.employee-header .logout-btn-header {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.header.employee-header .logout-btn-header:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+.header:not(.employee-header) .logout-btn-header {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.header:not(.employee-header) .logout-btn-header:hover {
+  background: #fee2e2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.15);
+}
+
+/* ===== ADMIN/MANAGER HEADER ===== */
+.header-brand {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  line-height: 1.15;
+  text-align: left !important;
+  margin: 0 !important;
+  width: auto !important;
+}
+
+.header-brand .brand-name {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0A1628;
+  letter-spacing: 0.3px;
+}
+
+.header-brand .brand-name span {
+  background: linear-gradient(120deg, #C9A84C, #e8c877);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.header-brand .brand-panel {
+  font-size: 0.55rem;
+  color: #9ca3af;
+  letter-spacing: 3px;
+  font-weight: 700;
+}
+
+.header-left {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.5rem;
+  margin: 0 !important;
+  margin-right: auto !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  text-align: left !important;
+}
+
+.header-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 1.5rem;
+  margin: 0 !important;
+  margin-left: auto !important;
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+
+/* =====================================================
+   RESPONSIVE - header "left" ab Sidebar.css ke width
+   breakpoints ke saath EXACTLY sync hai
+   (16rem -> 14rem -> 13rem -> 0, jaise .main-content)
+   ===================================================== */
+
+/* Tablet: sidebar 14rem ho jata hai */
+@media (max-width: 1024px) {
+  .header:not(.employee-header) {
+    left: 14rem;
+  }
+}
+
+/* Mobile: sidebar 13rem ho jata hai (abhi bhi visible hai, hidden nahi) */
+@media (max-width: 768px) {
+  .header:not(.employee-header) {
+    left: 13rem;
+    padding: 0 1rem;
+  }
+
+  .header.employee-header {
+    left: 0;
+    padding: 0 1rem;
+  }
+
+  .employee-header-left {
+    gap: 0.75rem;
+  }
+
+  .employee-brand .brand-name {
+    font-size: 0.9rem;
+  }
+
+  .employee-branch {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.6rem;
+  }
+
+  .user-info {
+    display: none;
+  }
+
+  .logout-btn-header span {
+    display: none;
+  }
+
+  .logout-btn-header {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .header-brand .brand-name {
+    font-size: 1.2rem;
+  }
+}
+
+/* Mobile Small: sidebar poori tarah hide/off-canvas ho jata hai */
+@media (max-width: 480px) {
+  .header {
+    height: 3.5rem;
+    left: 0 !important;
+    padding-left: 3.25rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  .header.employee-header {
+    left: 0 !important;
+  }
+
+  .header-left {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .header-brand {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .header-brand .brand-name {
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-brand .brand-panel {
+    font-size: 0.42rem;
+  }
+
+  .employee-brand .brand-panel {
+    font-size: 0.4rem;
+  }
+
+  .employee-brand .brand-name {
+    font-size: 0.75rem;
+  }
+
+  .employee-branch {
+    font-size: 0.5rem;
+    padding: 0.1rem 0.4rem;
+  }
+
+  .header-right {
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+}
