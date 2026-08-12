@@ -6,7 +6,7 @@ import {
   CreditCard, MapPin, Building, CheckCircle, XCircle,
   Eye, RefreshCw, AlertCircle, UserCheck, UserX,
   Download, Printer, ChevronDown, ChevronRight, X,
-  Key, Lock, Unlock, UserCog
+  Key, Lock, Unlock, UserCog, Edit2, Trash2, Save
 } from 'lucide-react';
 import './SystemAccess.css';
 import { API_URL, STORAGE_URL } from '../../../config';
@@ -256,6 +256,431 @@ const getFileUrl = (path) => {
   return `${STORAGE_URL}/${path}`;
 };
 
+const formatDate = (date) => {
+  if (!date) return '-';
+  return new Date(date).toLocaleDateString('en-PK', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
+const formatCNIC = (cnic) => {
+  if (!cnic) return '-';
+  const clean = cnic.replace(/[^0-9]/g, '');
+  if (clean.length === 13) {
+    return `${clean.slice(0, 5)}-${clean.slice(5, 12)}-${clean.slice(12)}`;
+  }
+  return cnic;
+};
+
+const getStatusBadge = (isActive) => {
+  return isActive ? (
+    <span className="status-badge active">
+      <CheckCircle size={12} /> Active
+    </span>
+  ) : (
+    <span className="status-badge inactive">
+      <XCircle size={12} /> Inactive
+    </span>
+  );
+};
+
+const getAccessBadge = (hasAccess) => {
+  return hasAccess ? (
+    <span className="status-badge active" style={{ background: '#dbeafe', color: '#1e40af' }}>
+      <Key size={12} /> Access Granted
+    </span>
+  ) : (
+    <span className="status-badge inactive" style={{ background: '#fef3c7', color: '#92400e' }}>
+      <Lock size={12} /> No Access
+    </span>
+  );
+};
+
+const getRoleBadge = (role) => {
+  const colors = {
+    admin: { bg: '#dbeafe', color: '#1e40af' },
+    manager: { bg: '#fef3c7', color: '#92400e' },
+    employee: { bg: '#d1fae5', color: '#065f46' }
+  };
+  const config = colors[role] || colors.employee;
+  return (
+    <span className="role-badge" style={{ background: config.bg, color: config.color }}>
+      {role?.toUpperCase()}
+    </span>
+  );
+};
+
+const getCreatedByDisplay = (user) => {
+  const creator = user?.created_by;
+  if (!creator || typeof creator !== 'object') {
+    return <span className="document-na">System / N/A</span>;
+  }
+  const roleLabel = creator.role
+    ? creator.role.charAt(0).toUpperCase() + creator.role.slice(1)
+    : '';
+  const branchLabel = creator.branch_id ? ` - Branch ${creator.branch_id}` : '';
+  return (
+    <span style={{ display: 'inline-flex', flexDirection: 'column', gap: '2px' }}>
+      <span className="branch-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+        <UserCog size={12} />
+        {creator.name} {roleLabel && `(${roleLabel}${branchLabel})`}
+      </span>
+      {creator.email && (
+        <span style={{ fontSize: '12px', color: '#6b7280' }}>
+          {creator.email}
+        </span>
+      )}
+    </span>
+  );
+};
+
+const getCreatedByText = (user) => {
+  const creator = user?.created_by;
+  if (!creator || typeof creator !== 'object') return 'System / N/A';
+  const roleLabel = creator.role
+    ? creator.role.charAt(0).toUpperCase() + creator.role.slice(1)
+    : '';
+  const branchLabel = creator.branch_id ? ` - Branch ${creator.branch_id}` : '';
+  return `${creator.name || ''}${roleLabel ? ` (${roleLabel}${branchLabel})` : ''}`.trim();
+};
+
+// ============================================
+// ✅ EDIT MODAL - moved OUTSIDE the parent component.
+// This is what was causing the "refresh on every keystroke" bug:
+// when this was defined inside SystemAccess(), React saw a brand
+// new component function on every render (i.e. every keystroke,
+// since typing updates editUserData state) and remounted the whole
+// modal + inputs, killing focus. Defining it here, at module scope,
+// means it's the SAME component across renders — only its props
+// change, so the input never loses focus.
+// ============================================
+const EditUserModal = ({
+  showEditModal,
+  selectedUser,
+  editUserData,
+  setEditUserData,
+  editLoading,
+  handleSaveEdit,
+  setShowEditModal
+}) => {
+  if (!showEditModal || !selectedUser) return null;
+
+  const handleInputChange = (field, value) => {
+    setEditUserData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  return (
+    <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+      <div className="modal-content edit-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
+        <div className="modal-header">
+          <div className="modal-header-left">
+            <Edit2 size={24} className="modal-icon" />
+            <div>
+              <h3 className="modal-title">Edit User</h3>
+              <p className="modal-subtitle">Update user details for {selectedUser.name}</p>
+            </div>
+          </div>
+          <button className="modal-close" onClick={() => setShowEditModal(false)}>
+            <X size={24} />
+          </button>
+        </div>
+
+        <div className="modal-body" style={{ padding: '20px 24px' }}>
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Full Name *</label>
+            <input
+              type="text"
+              className="form-input"
+              value={editUserData.name || ''}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontWeight: 600, fontSize: '14px' }}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Email</label>
+            <input
+              type="email"
+              className="form-input"
+              value={editUserData.email || ''}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontWeight: 600, fontSize: '14px' }}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Phone</label>
+            <input
+              type="text"
+              className="form-input"
+              value={editUserData.phone || ''}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontWeight: 600, fontSize: '14px' }}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>CNIC</label>
+            <input
+              type="text"
+              className="form-input"
+              value={editUserData.cnic || ''}
+              onChange={(e) => handleInputChange('cnic', e.target.value)}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontWeight: 600, fontSize: '14px' }}
+            />
+          </div>
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Address</label>
+            <input
+              type="text"
+              className="form-input"
+              value={editUserData.address || ''}
+              onChange={(e) => handleInputChange('address', e.target.value)}
+              style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontWeight: 600, fontSize: '14px' }}
+            />
+          </div>
+
+          {selectedUser.role !== 'admin' && (
+            <div className="form-group" style={{ marginBottom: '16px' }}>
+              <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Salary (PKR)</label>
+              <input
+                type="number"
+                className="form-input"
+                value={editUserData.salary || ''}
+                onChange={(e) => handleInputChange('salary', e.target.value)}
+                style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontWeight: 600, fontSize: '14px' }}
+              />
+            </div>
+          )}
+
+          <div className="form-group" style={{ marginBottom: '16px' }}>
+            <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Status</label>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', padding: '8px 0' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                <input
+                  type="radio"
+                  checked={editUserData.is_active === true}
+                  onChange={() => handleInputChange('is_active', true)}
+                />
+                <CheckCircle size={16} style={{ color: '#22c55e' }} /> Active
+              </label>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                <input
+                  type="radio"
+                  checked={editUserData.is_active === false}
+                  onChange={() => handleInputChange('is_active', false)}
+                />
+                <XCircle size={16} style={{ color: '#ef4444' }} /> Inactive
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-footer" style={{ padding: '16px 24px', borderTop: '1px solid #e5e7eb', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+          <button 
+            className="btn-cancel" 
+            onClick={() => setShowEditModal(false)} 
+            style={{ padding: '8px 20px', borderRadius: '8px', border: '1px solid #d1d5db', background: 'transparent', color: '#6b7280', fontWeight: 700, cursor: 'pointer' }}
+          >
+            Cancel
+          </button>
+          <button 
+            className="btn-save" 
+            onClick={handleSaveEdit} 
+            disabled={editLoading} 
+            style={{ padding: '8px 24px', borderRadius: '8px', border: 'none', background: editLoading ? '#93c5fd' : '#2563eb', color: '#fff', fontWeight: 700, cursor: editLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            {editLoading ? (
+              <>
+                <RefreshCw size={16} className="spinning" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save size={16} />
+                Save Changes
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============================================
+// ✅ USER DETAIL MODAL - also moved OUTSIDE for the same reason.
+// ============================================
+const UserDetailModal = ({ selectedUser, closeUserModal, handleEditUser }) => {
+  if (!selectedUser) return null;
+  const user = selectedUser;
+
+  return (
+    <div className="modal-overlay" onClick={closeUserModal}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '700px' }}>
+        <div className="modal-header">
+          <div className="modal-header-left">
+            <User size={24} className="modal-icon" />
+            <div>
+              <h3 className="modal-title">User Details</h3>
+              <p className="modal-subtitle">{user?.name || 'N/A'}</p>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <button 
+              className="btn-edit-detail" 
+              onClick={() => {
+                closeUserModal();
+                handleEditUser(user);
+              }}
+              style={{ padding: '6px 14px', fontSize: '13px', background: '#dbeafe', color: '#1e40af', border: '1px solid #93c5fd', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}
+            >
+              <Edit2 size={16} /> Edit
+            </button>
+            <button className="modal-close" onClick={closeUserModal}>
+              <X size={24} />
+            </button>
+          </div>
+        </div>
+
+        <div className="modal-body">
+          <div className="profile-summary">
+            <div className="profile-avatar" style={{
+              background: user?.role === 'admin' ? '#dbeafe' : 
+                        user?.role === 'manager' ? '#fef3c7' : '#d1fae5',
+              color: user?.role === 'admin' ? '#1e40af' : 
+                     user?.role === 'manager' ? '#92400e' : '#065f46'
+            }}>
+              {user?.name?.charAt(0) || 'U'}
+            </div>
+            <div className="profile-info">
+              <div className="profile-name">{user?.name || 'N/A'}</div>
+              <div className="profile-role">{getRoleBadge(user?.role)}</div>
+              <div className="profile-status">{getStatusBadge(user?.is_active)}</div>
+              {user?.role === 'employee' && (
+                <div className="profile-access">{getAccessBadge(user?.has_system_access)}</div>
+              )}
+            </div>
+          </div>
+
+          <div className="details-grid">
+            <div className="detail-item-full">
+              <span className="detail-label">Full Name</span>
+              <span className="detail-value">{user?.name || 'N/A'}</span>
+            </div>
+            <div className="detail-item-full">
+              <span className="detail-label">Email</span>
+              <span className="detail-value">{user?.email || 'N/A'}</span>
+            </div>
+            <div className="detail-item-full">
+              <span className="detail-label">Phone</span>
+              <span className="detail-value">{user?.phone || 'N/A'}</span>
+            </div>
+            <div className="detail-item-full">
+              <span className="detail-label">CNIC</span>
+              <span className="detail-value">{formatCNIC(user?.cnic)}</span>
+            </div>
+            <div className="detail-item-full">
+              <span className="detail-label">Address</span>
+              <span className="detail-value">{user?.address || 'N/A'}</span>
+            </div>
+            {user?.role !== 'admin' && (
+              <>
+                <div className="detail-item-full">
+                  <span className="detail-label">Branch</span>
+                  <span className="detail-value">{user?.branch_name || `Branch ${user?.branch_id}` || 'N/A'}</span>
+                </div>
+                <div className="detail-item-full">
+                  <span className="detail-label">Salary</span>
+                  <span className="detail-value">PKR {user?.salary?.toLocaleString() || '0'}</span>
+                </div>
+              </>
+            )}
+            {user?.role === 'employee' && (
+              <div className="detail-item-full">
+                <span className="detail-label">System Access</span>
+                <span className="detail-value">
+                  {user?.has_system_access ? 'Granted' : 'Not Granted'}
+                </span>
+              </div>
+            )}
+            <div className="detail-item-full">
+              <span className="detail-label">Created By</span>
+              <span className="detail-value">{getCreatedByDisplay(user)}</span>
+            </div>
+            <div className="detail-item-full">
+              <span className="detail-label">Joined Date</span>
+              <span className="detail-value">{formatDate(user?.created_at)}</span>
+            </div>
+            <div className="detail-item-full">
+              <span className="detail-label">Last Updated</span>
+              <span className="detail-value">{formatDate(user?.updated_at)}</span>
+            </div>
+          </div>
+
+          <div className="documents-section">
+            <h4 className="documents-title">Documents</h4>
+            <div className="documents-grid">
+              <div className="document-item">
+                <span className="document-label">CNIC Front</span>
+                {user?.cnic_front ? (
+                  <a href={getFileUrl(user.cnic_front)} target="_blank" rel="noopener noreferrer" className="document-link">
+                    View Document
+                  </a>
+                ) : (
+                  <span className="document-na">Not Uploaded</span>
+                )}
+              </div>
+              <div className="document-item">
+                <span className="document-label">CNIC Back</span>
+                {user?.cnic_back ? (
+                  <a href={getFileUrl(user.cnic_back)} target="_blank" rel="noopener noreferrer" className="document-link">
+                    View Document
+                  </a>
+                ) : (
+                  <span className="document-na">Not Uploaded</span>
+                )}
+              </div>
+              <div className="document-item">
+                <span className="document-label">Agreement Form</span>
+                {user?.agreement_form ? (
+                  <a href={getFileUrl(user.agreement_form)} target="_blank" rel="noopener noreferrer" className="document-link">
+                    View Document
+                  </a>
+                ) : (
+                  <span className="document-na">Not Uploaded</span>
+                )}
+              </div>
+              <div className="document-item">
+                <span className="document-label">Voice Consent</span>
+                {user?.voice_consent ? (
+                  <a href={getFileUrl(user.voice_consent)} target="_blank" rel="noopener noreferrer" className="document-link">
+                    Play Audio
+                  </a>
+                ) : (
+                  <span className="document-na">Not Uploaded</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal-footer" style={{ padding: '16px 24px', borderTop: '1px solid #e5e7eb', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+          <button className="btn-close-modal" onClick={closeUserModal} style={{ padding: '8px 20px', borderRadius: '8px', border: '1px solid #d1d5db', background: 'transparent', color: '#6b7280', fontWeight: 700, cursor: 'pointer' }}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const SystemAccess = () => {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -277,6 +702,20 @@ const SystemAccess = () => {
   });
   const [selectedUser, setSelectedUser] = useState(null);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editUserData, setEditUserData] = useState({
+    id: null,
+    name: '',
+    email: '',
+    phone: '',
+    cnic: '',
+    address: '',
+    branch_id: 1,
+    salary: '',
+    is_active: true,
+    role: ''
+  });
+  const [editLoading, setEditLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -343,6 +782,157 @@ const SystemAccess = () => {
     }
     fetchUsers(1);
   }, []);
+
+  // ============================================
+  // ✅ EDIT USER FUNCTION
+  // ============================================
+  const handleEditUser = (user) => {
+    setEditUserData({
+      id: user.id,
+      name: user.name || '',
+      email: user.email || '',
+      phone: user.phone || '',
+      cnic: user.cnic || '',
+      address: user.address || '',
+      branch_id: user.branch_id || 1,
+      salary: user.salary || '',
+      is_active: user.is_active !== undefined ? user.is_active : true,
+      role: user.role || ''
+    });
+    setShowEditModal(true);
+    setSelectedUser(user);
+  };
+
+  // ============================================
+  // ✅ SAVE EDIT USER
+  // ============================================
+  const handleSaveEdit = async () => {
+    if (!editUserData.id) {
+      showToaster('Invalid user data', 'error');
+      return;
+    }
+
+    setEditLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/users/${editUserData.id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: editUserData.name,
+          email: editUserData.email,
+          phone: editUserData.phone,
+          cnic: editUserData.cnic,
+          address: editUserData.address,
+          branch_id: parseInt(editUserData.branch_id) || 1,
+          salary: parseFloat(editUserData.salary) || 0,
+          is_active: editUserData.is_active
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        showToaster(`User ${editUserData.name} updated successfully!`, 'success');
+        setShowEditModal(false);
+        fetchUsers(1);
+      } else {
+        showToaster(data.message || 'Failed to update user', 'error');
+      }
+    } catch (error) {
+      console.error('Error updating user:', error);
+      showToaster('Network error. Please try again.', 'error');
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
+  // ============================================
+  // ✅ DELETE USER FUNCTION
+  // ============================================
+  const handleDeleteUser = (user) => {
+    showConfirm(
+      'Delete User',
+      `Are you sure you want to delete ${user.name}? This action cannot be undone.`,
+      'Delete',
+      'Cancel',
+      async () => {
+        setConfirmLoading(true);
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch(`${API_URL}/users/${user.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Accept': 'application/json'
+            }
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            showToaster(`User ${user.name} deleted successfully!`, 'success');
+            fetchUsers(1);
+            hideConfirm();
+          } else {
+            showToaster(data.message || 'Failed to delete user', 'error');
+            setConfirmLoading(false);
+          }
+        } catch (error) {
+          console.error('Error deleting user:', error);
+          showToaster('Network error. Please try again.', 'error');
+          setConfirmLoading(false);
+        }
+      }
+    );
+  };
+
+  // ============================================
+  // ✅ TOGGLE USER STATUS
+  // ============================================
+  const handleToggleStatus = async (user) => {
+    const newStatus = !user.is_active;
+    showConfirm(
+      newStatus ? 'Activate User' : 'Deactivate User',
+      `Are you sure you want to ${newStatus ? 'activate' : 'deactivate'} ${user.name}?`,
+      newStatus ? 'Activate' : 'Deactivate',
+      'Cancel',
+      async () => {
+        setConfirmLoading(true);
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch(`${API_URL}/users/${user.id}/toggle-status`, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ is_active: newStatus })
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            showToaster(`${user.name} is now ${newStatus ? 'active' : 'inactive'}`, 'success');
+            fetchUsers(1);
+            hideConfirm();
+          } else {
+            showToaster(data.message || 'Failed to update status', 'error');
+            setConfirmLoading(false);
+          }
+        } catch (error) {
+          console.error('Error toggling status:', error);
+          showToaster('Network error. Please try again.', 'error');
+          setConfirmLoading(false);
+        }
+      }
+    );
+  };
 
   const handleToggleAccess = useCallback(async (userItem) => {
     const grantingAccess = !userItem.has_system_access;
@@ -511,16 +1101,6 @@ const SystemAccess = () => {
     };
   }, [users, filterUsers]);
 
-  const getCreatedByText = (user) => {
-    const creator = user?.created_by;
-    if (!creator || typeof creator !== 'object') return 'System / N/A';
-    const roleLabel = creator.role
-      ? creator.role.charAt(0).toUpperCase() + creator.role.slice(1)
-      : '';
-    const branchLabel = creator.branch_id ? ` - Branch ${creator.branch_id}` : '';
-    return `${creator.name || ''}${roleLabel ? ` (${roleLabel}${branchLabel})` : ''}`.trim();
-  };
-
   const exportData = useMemo(() => {
     const allUsers = [
       ...filteredData.admins.map(u => ({
@@ -579,68 +1159,6 @@ const SystemAccess = () => {
     setSearch(e.target.value);
   };
 
-  const getStatusBadge = (isActive) => {
-    return isActive ? (
-      <span className="status-badge active">
-        <CheckCircle size={12} /> Active
-      </span>
-    ) : (
-      <span className="status-badge inactive">
-        <XCircle size={12} /> Inactive
-      </span>
-    );
-  };
-
-  const getAccessBadge = (hasAccess) => {
-    return hasAccess ? (
-      <span className="status-badge active" style={{ background: '#dbeafe', color: '#1e40af' }}>
-        <Key size={12} /> Access Granted
-      </span>
-    ) : (
-      <span className="status-badge inactive" style={{ background: '#fef3c7', color: '#92400e' }}>
-        <Lock size={12} /> No Access
-      </span>
-    );
-  };
-
-  const getRoleBadge = (role) => {
-    const colors = {
-      admin: { bg: '#dbeafe', color: '#1e40af' },
-      manager: { bg: '#fef3c7', color: '#92400e' },
-      employee: { bg: '#d1fae5', color: '#065f46' }
-    };
-    const config = colors[role] || colors.employee;
-    return (
-      <span className="role-badge" style={{ background: config.bg, color: config.color }}>
-        {role?.toUpperCase()}
-      </span>
-    );
-  };
-
-  const getCreatedByDisplay = (user) => {
-    const creator = user?.created_by;
-    if (!creator || typeof creator !== 'object') {
-      return <span className="document-na">System / N/A</span>;
-    }
-    const roleLabel = creator.role
-      ? creator.role.charAt(0).toUpperCase() + creator.role.slice(1)
-      : '';
-    const branchLabel = creator.branch_id ? ` - Branch ${creator.branch_id}` : '';
-    return (
-      <span style={{ display: 'inline-flex', flexDirection: 'column', gap: '2px' }}>
-        <span className="branch-tag" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          <UserCog size={12} />
-          {creator.name} {roleLabel && `(${roleLabel}${branchLabel})`}
-        </span>
-        {creator.email && (
-          <span style={{ fontSize: '12px', color: '#6b7280' }}>
-            {creator.email}
-          </span>
-        )}
-      </span>
-    );
-  };
-
   const openUserModal = (user) => {
     setSelectedUser(user);
     setShowUserModal(true);
@@ -649,24 +1167,6 @@ const SystemAccess = () => {
   const closeUserModal = () => {
     setShowUserModal(false);
     setSelectedUser(null);
-  };
-
-  const formatDate = (date) => {
-    if (!date) return '-';
-    return new Date(date).toLocaleDateString('en-PK', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric'
-    });
-  };
-
-  const formatCNIC = (cnic) => {
-    if (!cnic) return '-';
-    const clean = cnic.replace(/[^0-9]/g, '');
-    if (clean.length === 13) {
-      return `${clean.slice(0, 5)}-${clean.slice(5, 12)}-${clean.slice(12)}`;
-    }
-    return cnic;
   };
 
   const renderUserTable = (section, title, usersList, Icon, showAccess = false, showBranch = true, applyBranchFilter = true, showAccessAction = false, showCreatedBy = false) => {
@@ -707,7 +1207,7 @@ const SystemAccess = () => {
               <div className="table-responsive">
                 <table className="user-table">
                   <thead>
-              <tr style={{ background: '#1E1B4B' }}>
+                    <tr style={{ background: '#1E1B4B' }}>
                       <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>#</th>
                       <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Name</th>
                       <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Email</th>
@@ -726,7 +1226,7 @@ const SystemAccess = () => {
                         return null;
                       }
                       return (
-                        <tr key={user?.id || index} onClick={() => openUserModal(user)}>
+                        <tr key={user?.id || index}>
                           <td className="text-center">{index + 1}</td>
                           <td>
                             <div className="user-name-cell">
@@ -759,13 +1259,69 @@ const SystemAccess = () => {
                           )}
                           <td>{getStatusBadge(user?.is_active)}</td>
                           <td>
-                            <button className="btn-view-detail" onClick={(e) => {
-                              e.stopPropagation();
-                              openUserModal(user);
-                            }}>
-                              <Eye size={16} />
-                              View
-                            </button>
+                            <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
+                              <button 
+                                className="btn-view-detail" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  openUserModal(user);
+                                }}
+                                style={{ padding: '4px 10px', fontSize: '12px' }}
+                              >
+                                <Eye size={14} /> View
+                              </button>
+                              <button 
+                                className="btn-edit-detail" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleEditUser(user);
+                                }}
+                                style={{ padding: '4px 10px', fontSize: '12px', background: '#dbeafe', color: '#1e40af', border: '1px solid #93c5fd', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                              >
+                                <Edit2 size={14} /> Edit
+                              </button>
+                              <button 
+                                className="btn-delete-detail" 
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeleteUser(user);
+                                }}
+                                style={{ padding: '4px 10px', fontSize: '12px', background: '#fee2e2', color: '#b91c1c', border: '1px solid #fecaca', borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+                              >
+                                <Trash2 size={14} /> Delete
+                              </button>
+                              {user.role !== 'admin' && (
+                                <button 
+                                  className="btn-toggle-status" 
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleToggleStatus(user);
+                                  }}
+                                  style={{ 
+                                    padding: '4px 10px', 
+                                    fontSize: '12px', 
+                                    background: user.is_active ? '#fef3c7' : '#dcfce7', 
+                                    color: user.is_active ? '#92400e' : '#166534', 
+                                    border: user.is_active ? '1px solid #fde68a' : '1px solid #bbf7d0', 
+                                    borderRadius: '6px', 
+                                    cursor: 'pointer', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    gap: '4px' 
+                                  }}
+                                >
+                                  {user.is_active ? (
+                                    <>
+                                      <XCircle size={14} /> Deactivate
+                                    </>
+                                  ) : (
+                                    <>
+                                      <CheckCircle size={14} /> Activate
+                                    </>
+                                  )}
+                                </button>
+                              )}
+                            </div>
                           </td>
                           {showAccessAction && (
                             <td>
@@ -808,158 +1364,6 @@ const SystemAccess = () => {
     );
   };
 
-  const UserDetailModal = () => {
-    if (!selectedUser) return null;
-    const user = selectedUser;
-
-    return (
-      <div className="modal-overlay" onClick={closeUserModal}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <div className="modal-header">
-            <div className="modal-header-left">
-              <User size={24} className="modal-icon" />
-              <div>
-                <h3 className="modal-title">User Details</h3>
-                <p className="modal-subtitle">{user?.name || 'N/A'}</p>
-              </div>
-            </div>
-            <button className="modal-close" onClick={closeUserModal}>
-              <X size={24} />
-            </button>
-          </div>
-
-          <div className="modal-body">
-            <div className="profile-summary">
-              <div className="profile-avatar" style={{
-                background: user?.role === 'admin' ? '#dbeafe' : 
-                          user?.role === 'manager' ? '#fef3c7' : '#d1fae5',
-                color: user?.role === 'admin' ? '#1e40af' : 
-                       user?.role === 'manager' ? '#92400e' : '#065f46'
-              }}>
-                {user?.name?.charAt(0) || 'U'}
-              </div>
-              <div className="profile-info">
-                <div className="profile-name">{user?.name || 'N/A'}</div>
-                <div className="profile-role">{getRoleBadge(user?.role)}</div>
-                <div className="profile-status">{getStatusBadge(user?.is_active)}</div>
-                {user?.role === 'employee' && (
-                  <div className="profile-access">{getAccessBadge(user?.has_system_access)}</div>
-                )}
-              </div>
-            </div>
-
-            <div className="details-grid">
-              <div className="detail-item-full">
-                <span className="detail-label">Full Name</span>
-                <span className="detail-value">{user?.name || 'N/A'}</span>
-              </div>
-              <div className="detail-item-full">
-                <span className="detail-label">Email</span>
-                <span className="detail-value">{user?.email || 'N/A'}</span>
-              </div>
-              <div className="detail-item-full">
-                <span className="detail-label">Phone</span>
-                <span className="detail-value">{user?.phone || 'N/A'}</span>
-              </div>
-              <div className="detail-item-full">
-                <span className="detail-label">CNIC</span>
-                <span className="detail-value">{formatCNIC(user?.cnic)}</span>
-              </div>
-              <div className="detail-item-full">
-                <span className="detail-label">Address</span>
-                <span className="detail-value">{user?.address || 'N/A'}</span>
-              </div>
-              {user?.role !== 'admin' && (
-                <div className="detail-item-full">
-                  <span className="detail-label">Branch</span>
-                  <span className="detail-value">{user?.branch_name || `Branch ${user?.branch_id}` || 'N/A'}</span>
-                </div>
-              )}
-              {user?.role !== 'admin' && (
-                <div className="detail-item-full">
-                  <span className="detail-label">Salary</span>
-                  <span className="detail-value">PKR {user?.salary?.toLocaleString() || '0'}</span>
-                </div>
-              )}
-              {user?.role === 'employee' && (
-                <div className="detail-item-full">
-                  <span className="detail-label">System Access</span>
-                  <span className="detail-value">
-                    {user?.has_system_access ? 'Granted' : 'Not Granted'}
-                  </span>
-                </div>
-              )}
-              <div className="detail-item-full">
-                <span className="detail-label">Created By</span>
-                <span className="detail-value">{getCreatedByDisplay(user)}</span>
-              </div>
-              <div className="detail-item-full">
-                <span className="detail-label">Joined Date</span>
-                <span className="detail-value">{formatDate(user?.created_at)}</span>
-              </div>
-              <div className="detail-item-full">
-                <span className="detail-label">Last Updated</span>
-                <span className="detail-value">{formatDate(user?.updated_at)}</span>
-              </div>
-            </div>
-
-            <div className="documents-section">
-              <h4 className="documents-title">Documents</h4>
-              <div className="documents-grid">
-                <div className="document-item">
-                  <span className="document-label">CNIC Front</span>
-                  {user?.cnic_front ? (
-                    <a href={getFileUrl(user.cnic_front)} target="_blank" rel="noopener noreferrer" className="document-link">
-                      View Document
-                    </a>
-                  ) : (
-                    <span className="document-na">Not Uploaded</span>
-                  )}
-                </div>
-                <div className="document-item">
-                  <span className="document-label">CNIC Back</span>
-                  {user?.cnic_back ? (
-                    <a href={getFileUrl(user.cnic_back)} target="_blank" rel="noopener noreferrer" className="document-link">
-                      View Document
-                    </a>
-                  ) : (
-                    <span className="document-na">Not Uploaded</span>
-                  )}
-                </div>
-                <div className="document-item">
-                  <span className="document-label">Agreement Form</span>
-                  {user?.agreement_form ? (
-                    <a href={getFileUrl(user.agreement_form)} target="_blank" rel="noopener noreferrer" className="document-link">
-                      View Document
-                    </a>
-                  ) : (
-                    <span className="document-na">Not Uploaded</span>
-                  )}
-                </div>
-                <div className="document-item">
-                  <span className="document-label">Voice Consent</span>
-                  {user?.voice_consent ? (
-                    <a href={getFileUrl(user.voice_consent)} target="_blank" rel="noopener noreferrer" className="document-link">
-                      Play Audio
-                    </a>
-                  ) : (
-                    <span className="document-na">Not Uploaded</span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="modal-footer">
-            <button className="btn-close-modal" onClick={closeUserModal}>
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   if (loading) {
     return (
       <div className="system-access-container">
@@ -989,11 +1393,9 @@ const SystemAccess = () => {
 
   const branchLabel = userBranch ? `Branch ${userBranch}` : 'All Branches';
   const isAdminUser = userRole === 'admin';
-  const isManagerUser = userRole === 'manager';
 
   return (
     <div className="system-access-container">
-      {/* ===== TOASTER ===== */}
       {toaster.show && (
         <Toaster
           message={toaster.message}
@@ -1002,7 +1404,6 @@ const SystemAccess = () => {
         />
       )}
 
-      {/* ===== CONFIRM MODAL ===== */}
       <ConfirmModal
         isOpen={confirmModal.isOpen}
         onConfirm={() => {
@@ -1018,7 +1419,24 @@ const SystemAccess = () => {
         loading={confirmModal.loading}
       />
 
-      {showUserModal && <UserDetailModal />}
+      {showUserModal && (
+        <UserDetailModal
+          selectedUser={selectedUser}
+          closeUserModal={closeUserModal}
+          handleEditUser={handleEditUser}
+        />
+      )}
+      {showEditModal && (
+        <EditUserModal
+          showEditModal={showEditModal}
+          selectedUser={selectedUser}
+          editUserData={editUserData}
+          setEditUserData={setEditUserData}
+          editLoading={editLoading}
+          handleSaveEdit={handleSaveEdit}
+          setShowEditModal={setShowEditModal}
+        />
+      )}
 
       <div className="system-access-header">
         <div className="header-left">
@@ -1052,7 +1470,6 @@ const SystemAccess = () => {
       </div>
 
       <div className="summary-cards">
-        {/* ✅ Admins Card - Sirf Admin ko dikhega */}
         {isAdminUser && (
           <div className="summary-card admin-card">
             <div className="summary-icon" style={{ background: '#dbeafe', color: '#1e40af' }}>
@@ -1137,16 +1554,9 @@ const SystemAccess = () => {
       </div>
 
       <div className="roles-container">
-        {/* ✅ Admin Table - Sirf Admin ko dikhega */}
         {isAdminUser && renderUserTable('admin', 'Admins', users.admin, Shield, false, false, false, false, false)}
-        
-        {/* ✅ Manager Table - Admin aur Manager dono ko */}
         {renderUserTable('manager', 'Managers', users.manager, Briefcase, false, true, true, false, true)}
-        
-        {/* ✅ Employees Table - Sabko */}
         {renderUserTable('employee', 'All Employees', users.employee, User, true, true, true, true, true)}
-        
-        {/* ✅ System Access List - Sabko */}
         {renderUserTable('systemAccess', 'System Access List', users.systemAccess, Key, true, true, true, true, true)}
       </div>
 

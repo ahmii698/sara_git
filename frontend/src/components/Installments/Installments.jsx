@@ -2241,6 +2241,7 @@ const Installments = () => {
                   <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>#</th>
                   <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Customer</th>
                   <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Case No</th>
+                  <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Account Opened</th>
                   <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Due Date</th>
                   <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Installments</th>
                   <th style={{ fontWeight: 800, color: '#fff', padding: '14px 16px', textAlign: 'left', borderBottom: 'none' }}>Balance</th>
@@ -2276,6 +2277,9 @@ const Installments = () => {
 
                   const accountTotalBalance = accountData.balance || item.balance || 0;
                   const remarks = item.remarks || '';
+
+                  const rowCustomer = item.customer || accountData.customer || {};
+                  const accountOpeningDate = accountData.created_at || rowCustomer.created_at || item.created_at || null;
 
                   const rowAccountId = item.account_id || item.account?.id;
                   const lockInfo = rowAccountId ? lockedAccounts[rowAccountId] : null;
@@ -2317,6 +2321,11 @@ const Installments = () => {
                       </td>
                       <td>
                         <span className="case-no">{caseNo}</span>
+                      </td>
+                      <td>
+                        <span style={{fontWeight: '500', color: '#2563eb', fontSize: '13px'}}>
+                          {formatDate(accountOpeningDate)}
+                        </span>
                       </td>
                       <td>
                         <span className="month-text" style={{fontWeight: '500', color: '#7c3aed'}}>

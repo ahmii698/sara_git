@@ -130,7 +130,7 @@ const OLD_RECORD_CASE_NO_LIMIT = 10000;
 // ✅ NEW: Max limits for repeatable fields
 // ============================================
 const MAX_PHONE_NUMBERS = 4;
-const MAX_VOICE_FILES = 10; // ✅ Changed from 4 to 8
+const MAX_VOICE_FILES = 10;
 
 const AddAccount = () => {
   const [step, setStep] = useState(1);
@@ -157,7 +157,7 @@ const AddAccount = () => {
 
   const [isOldRecord, setIsOldRecord] = useState(false);
   const [manualCaseNo, setManualCaseNo] = useState('');
-  const [accountDate, setAccountDate] = useState(''); // ✅ NEW: Manual date for ALL accounts (Old + New)
+  const [accountDate, setAccountDate] = useState('');
 
   const [showFirstInstallmentModal, setShowFirstInstallmentModal] = useState(false);
   const [firstInstallmentPayAmount, setFirstInstallmentPayAmount] = useState('');
@@ -233,7 +233,6 @@ const AddAccount = () => {
   const billImage2Ref = useRef(null);
   const guarantorRefs = useRef([]);
   
-  // ✅ REF for scrolling to top of container
   const containerRef = useRef(null);
 
   // ============================================
@@ -257,7 +256,6 @@ const AddAccount = () => {
   // ✅ AUTO SCROLL WHEN STEP CHANGES
   // ============================================
   useEffect(() => {
-    // Page 1 se Page 2 par jaate hi top par scroll karega
     scrollToTop();
   }, [step, scrollToTop]);
 
@@ -379,19 +377,44 @@ const AddAccount = () => {
     const voice = voiceFiles[index];
     if (!voice) return;
 
+    // Agar already playing hai toh stop karo
+    if (playingIndex === index) {
+      const audioElements = document.querySelectorAll('audio');
+      audioElements.forEach(audio => {
+        if (!audio.paused) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
+      setPlayingIndex(null);
+      return;
+    }
+
     const audio = new Audio(voice.url);
     audio.play();
     setPlayingIndex(index);
     audio.onended = () => {
       setPlayingIndex(null);
     };
+    audio.onerror = () => {
+      setPlayingIndex(null);
+    };
   };
 
   const deleteVoice = (index) => {
     if (window.confirm('Delete this voice file?')) {
+      if (playingIndex === index) {
+        const audioElements = document.querySelectorAll('audio');
+        audioElements.forEach(audio => {
+          if (!audio.paused) {
+            audio.pause();
+            audio.currentTime = 0;
+          }
+        });
+        setPlayingIndex(null);
+      }
       const newVoices = voiceFiles.filter((_, i) => i !== index);
       setVoiceFiles(newVoices);
-      if (playingIndex === index) setPlayingIndex(null);
       showToaster('Voice file deleted', 'info');
     }
   };
@@ -801,11 +824,6 @@ const AddAccount = () => {
       newErrors.additionalImage2 = 'Additional Image 2 is required';
     }
 
-    // ✅ NEW: Account Date validation for ALL accounts (Old + New)
-    if (!accountDate) {
-      newErrors.accountDate = 'Account opening date is required.';
-    }
-
     if (isOldRecord) {
       const hasAtLeastOneGuarantorCnic = formData.guarantors.some(g => g.cnic && g.cnic.trim());
       if (!hasAtLeastOneGuarantorCnic) {
@@ -858,6 +876,11 @@ const AddAccount = () => {
     if (!formData.noOfInstallments) newErrors.noOfInstallments = 'Number of installments is required';
     if (!formData.dueDate) newErrors.dueDate = 'Due date is required';
     
+    // ✅ Account Date validation moved to Step 2
+    if (!accountDate) {
+      newErrors.accountDate = 'Account opening date is required.';
+    }
+    
     if (!formData.chalanFront) {
       newErrors.chalanFront = 'Chalan Front image is required';
     }
@@ -869,14 +892,12 @@ const AddAccount = () => {
   const handleNext = () => {
     if (validateStep1()) {
       setStep(2);
-      // ✅ Scroll to top after step change
       scrollToTop();
     }
   };
   
   const handlePrev = () => {
     setStep(1);
-    // ✅ Scroll to top after step change
     scrollToTop();
   };
 
@@ -967,7 +988,6 @@ const AddAccount = () => {
 
       customerFormData.append('first_installment_payment', Math.round(firstInstallmentPayment || 0));
       
-      // ✅ FIX: Slip No ko DONO fields mein bhejo
       if (firstInstallmentPayment > 0 && firstInstallmentSlipNo.trim()) {
         customerFormData.append('first_installment_slip_no', firstInstallmentSlipNo.trim());
         customerFormData.append('slip_no', firstInstallmentSlipNo.trim());
@@ -978,11 +998,10 @@ const AddAccount = () => {
         customerFormData.append('case_no', manualCaseNo.trim());
       }
       
-      // ✅ NEW: Account Date - ALWAYS send manual date (for both Old + New records)
+      // ✅ Account Date - send manual date
       if (accountDate) {
         customerFormData.append('account_date', accountDate);
       }
-      // Agar accountDate nahi hai toh backend auto lega today's date
       
       if (formData.cnicFront) {
         customerFormData.append('cnic_front', formData.cnicFront);
@@ -1141,7 +1160,6 @@ const AddAccount = () => {
           'success'
         );
         
-        // Reset form
         setFormData({
           name: '',
           cnic: '',
@@ -1189,12 +1207,11 @@ const AddAccount = () => {
         setExistingAccountData(null);
         setIsOldRecord(false);
         setManualCaseNo('');
-        setAccountDate(''); // ✅ NEW: Reset account date
+        setAccountDate('');
         setFirstInstallmentPayAmount('');
         setFirstInstallmentSlipNo('');
         setStep(1);
         
-        // ✅ SCROLL TO TOP AFTER FORM RESET
         setTimeout(() => {
           scrollToTop();
         }, 100);
@@ -1267,7 +1284,6 @@ const AddAccount = () => {
 
   return (
     <div className="add-account-container" ref={containerRef}>
-      {/* ===== TOASTER ===== */}
       {toaster.show && (
         <Toaster
           message={toaster.message}
@@ -1385,7 +1401,6 @@ const AddAccount = () => {
         </div>
       )}
 
-      {/* ===== FIRST INSTALLMENT MODAL WITH SLIP NO ===== */}
       {showFirstInstallmentModal && (
         <div className="status-modal-overlay" onClick={() => setShowFirstInstallmentModal(false)}>
           <div className="status-modal" style={{ maxWidth: '480px' }} onClick={(e) => e.stopPropagation()}>
@@ -1424,7 +1439,6 @@ const AddAccount = () => {
                 />
               </div>
 
-              {/* ✅ Slip No field - only shows when amount > 0 */}
               {parseFloat(firstInstallmentPayAmount) > 0 && (
                 <div style={{ marginTop: '12px' }}>
                   <label style={{ fontWeight: 700, display: 'block', marginBottom: '6px' }}>Slip No *</label>
@@ -1473,29 +1487,6 @@ const AddAccount = () => {
             <span>{branchLabel}</span>
           </div>
         )}
-      </div>
-
-      {/* ============================================
-          ACCOUNT OPENING DATE - For ALL accounts (Old + New)
-          ============================================ */}
-      <div className="form-group" style={{ marginBottom: '20px' }}>
-        <label style={{ fontWeight: 700 }}>Account Opening Date *</label>
-        <div className="input-with-icon">
-          <Calendar size={18} style={{ color: '#2563eb' }} />
-          <input
-            type="date"
-            className="form-input"
-            value={accountDate}
-            onChange={(e) => setAccountDate(e.target.value)}
-            style={{ fontWeight: 500 }}
-          />
-        </div>
-        <small className="field-hint" style={{ fontWeight: 500 }}>
-          {isOldRecord 
-            ? 'Purane record ki asal account opening date daalo — installments isi date se calculate hongi.'
-            : 'Naye account ki opening date daalo — installments isi date se calculate hongi.'}
-        </small>
-        {errors.accountDate && <span className="error-text" style={{ fontWeight: 600 }}>{errors.accountDate}</span>}
       </div>
 
       {/* ============================================
@@ -1872,8 +1863,31 @@ const AddAccount = () => {
                         <span className="voice-file-time" style={{ fontWeight: 500 }}>{voice.timestamp}</span>
                       </div>
                       <div className="voice-file-actions">
-                        <button className={`btn-play ${playingIndex === index ? 'playing' : ''}`} onClick={() => playVoice(index)} style={{ fontWeight: 600 }}>
-                          {playingIndex === index ? '⏹' : '▶'} Play
+                        <button 
+                          className={`btn-play ${playingIndex === index ? 'playing' : ''}`} 
+                          onClick={() => playVoice(index)} 
+                          style={{ 
+                            fontWeight: 600,
+                            background: playingIndex === index ? '#ef4444' : '#2563eb',
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '6px',
+                            padding: '4px 12px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          {playingIndex === index ? (
+                            <>
+                              <PauseCircle size={14} /> Stop
+                            </>
+                          ) : (
+                            <>
+                              <Play size={14} /> Play
+                            </>
+                          )}
                         </button>
                         <button className="btn-delete-voice" onClick={() => deleteVoice(index)}><Trash2 size={16} /></button>
                       </div>
@@ -2114,11 +2128,34 @@ const AddAccount = () => {
                 </div>
                 {errors.noOfInstallments && <span className="error-text" style={{ fontWeight: 600 }}>{errors.noOfInstallments}</span>}
               </div>
+              
               <div className="form-group">
                 <label style={{ fontWeight: 700 }}>Due Date *</label>
                 <input type="date" name="dueDate" className="form-input" value={formData.dueDate} onChange={handleChange} style={{ fontWeight: 500 }} />
                 {errors.dueDate && <span className="error-text" style={{ fontWeight: 600 }}>{errors.dueDate}</span>}
               </div>
+
+              {/* ✅ ACCOUNT OPENING DATE - NOW IN STEP 2, UNDER DUE DATE */}
+              <div className="form-group">
+                <label style={{ fontWeight: 700 }}>Account Opening Date *</label>
+                <div className="input-with-icon">
+                  <Calendar size={18} style={{ color: '#2563eb' }} />
+                  <input
+                    type="date"
+                    className="form-input"
+                    value={accountDate}
+                    onChange={(e) => setAccountDate(e.target.value)}
+                    style={{ fontWeight: 500 }}
+                  />
+                </div>
+                <small className="field-hint" style={{ fontWeight: 500 }}>
+                  {isOldRecord 
+                    ? 'Purane record ki asal account opening date daalo — installments isi date se calculate hongi.'
+                    : 'Naye account ki opening date daalo — installments isi date se calculate hongi.'}
+                </small>
+                {errors.accountDate && <span className="error-text" style={{ fontWeight: 600 }}>{errors.accountDate}</span>}
+              </div>
+
               <div className="form-group">
                 <label style={{ fontWeight: 700 }}>Installment Amount</label>
                 <div className="input-with-icon">
@@ -2224,13 +2261,8 @@ const AddAccount = () => {
           <span className={step === 2 ? 'active' : ''}>2. Product & Installments</span>
         </div>
       </form>
-
     </div>
-
   );
-
 };
-
-
 
 export default AddAccount;
